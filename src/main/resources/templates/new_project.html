@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Department</title>
+    <title>Add New Project</title>
     <style>
         /* Global Styles */
         body {
@@ -36,7 +36,7 @@
             border-radius: 10px;
             box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
             width: 100%;
-            max-width: 500px;
+            max-width: 600px;
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -47,7 +47,7 @@
             color: #333;
         }
 
-        input, textarea {
+        input, textarea, select {
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
@@ -61,7 +61,7 @@
             height: 100px;
         }
 
-        input:focus, textarea:focus {
+        input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: #2575fc;
             box-shadow: 0 0 8px rgba(37, 117, 252, 0.5);
@@ -119,23 +119,44 @@
     </style>
 </head>
 <body>
-    <h1>Add New Department</h1>
-    <form th:action="@{/departments}" th:object="${department}" method="post">
-        <!-- Department Name -->
-        <label for="name">Department Name:</label>
-        <input type="text" id="name" th:field="*{name}" required>
+    <h1>Add New Project</h1>
+    <form th:action="@{/projects}" th:object="${project}" method="post">
+        <!-- Project Name -->
+        <label for="name">Project Name:</label>
+        <input type="text" id="name" th:field="*{name}" placeholder="Enter project name" required>
         <div th:if="${#fields.hasErrors('name')}" class="error" th:errors="*{name}"></div>
 
-        <!-- Description -->
+        <!-- Project Description -->
         <label for="description">Description:</label>
-        <textarea id="description" th:field="*{description}"></textarea>
+        <textarea id="description" th:field="*{description}" placeholder="Enter project description"></textarea>
         <div th:if="${#fields.hasErrors('description')}" class="error" th:errors="*{description}"></div>
 
-        <!-- Submit Button -->
-        <button type="submit">Save</button>
-    </form>
+        <!-- Start Date -->
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" th:field="*{startDate}" required>
+        <div th:if="${#fields.hasErrors('startDate')}" class="error" th:errors="*{startDate}"></div>
 
-    <!-- Back Button -->
-    <a href="/departments">Back to Departments</a>
+        <!-- End Date -->
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" th:field="*{endDate}">
+        <div th:if="${#fields.hasErrors('endDate')}" class="error" th:errors="*{endDate}"></div>
+
+        <!-- Status -->
+        <label for="status">Status:</label>
+        <select id="status" th:field="*{status}" required>
+            <option value="" disabled selected>Select status</option>
+            <option value="Ongoing" th:selected="*{status == 'Ongoing'}">Ongoing</option>
+            <option value="Completed" th:selected="*{status == 'Completed'}">Completed</option>
+            <option value="On Hold" th:selected="*{status == 'On Hold'}">On Hold</option>
+        </select>
+        <div th:if="${#fields.hasErrors('status')}" class="error" th:errors="*{status}"></div>
+
+        <!-- Submit Button -->
+        <button type="submit">Save Project</button>
+    </form>
+    <br>
+
+    <!-- Back to Projects -->
+    <a href="/projects">Back to Projects</a>
 </body>
 </html>

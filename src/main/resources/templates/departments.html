@@ -1,29 +1,117 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Departments</title>
+    <title>Departments</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff7eb3, #ff758c, #6a11cb);
+            background-size: 400% 400%;
+            animation: gradientBG 8s ease infinite;
+            color: #fff;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Navigation Links */
+        a {
+            text-decoration: none;
+            font-size: 1rem;
+            color: #fff;
+            margin: 0 10px;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        hr {
+            border: none;
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            margin: 20px 0;
+        }
+
+        /* Table Design */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        th {
+            background: #6a11cb;
+            color: #fff;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        tbody tr:nth-child(even) {
+            background: rgba(240, 240, 240, 0.8);
+        }
+
+        tbody tr:nth-child(odd) {
+            background: rgba(200, 200, 200, 0.4);
+        }
+
+        tbody tr:hover {
+            background: rgba(0, 123, 255, 0.2);
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-	<h1>Departments</h1>
-	<a href="/index">Home</a> |
-	<a href="/departments/new">Add New Department</a> |
-	<a href="/logout">Logout</a>
-	<hr>
-	<table border="1">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Name</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="department : ${departments}">
-				<td th:text="${department.id}"></td>
-				<td th:text="${department.name}"></td>
-				<td th:text="${department.description}"></td>
-			</tr>
-		</tbody>
-	</table>
+    <h1>Departments</h1>
+    <a href="/index">Home</a> |
+    <a href="/departments/new">Add New Department</a> |
+    <a href="/logout">Logout</a>
+    <hr>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="department : ${departments}">
+                <td th:text="${department.id}"></td>
+                <td th:text="${department.name}"></td>
+                <td th:text="${department.description}"></td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>

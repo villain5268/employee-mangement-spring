@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Mark Attendance</title>
+</head>
+<body>
+	<h1>
+		Mark Attendance for <span
+			th:text="${employee.firstName} + ' ' + ${employee.lastName}"></span>
+	</h1>
+
+	<form th:action="@{/attendance}" method="post"
+		th:object="${attendance}">
+		<input type="hidden" th:field="*{employee.id}"
+			th:value="${employee.id}" /> <label for="date">Date:</label> <input
+			type="date" id="date" th:field="*{date}" required /> <br> <label
+			for="status">Status:</label> <select id="status" th:field="*{status}"
+			required>
+			<option value="Present">Present</option>
+			<option value="Absent">Absent</option>
+		</select> <br> <label for="remarks">Remarks:</label>
+		<textarea id="remarks" th:field="*{remarks}" placeholder="Optional"></textarea>
+		<br>
+
+		<button type="submit">Submit</button>
+	</form>
+	<p>
+		<a th:href="@{/employee/{id}/attendance(id=${employee.id})}">Back
+			to Attendance Dashboard</a>
+	</p>
+</body>
+</html>

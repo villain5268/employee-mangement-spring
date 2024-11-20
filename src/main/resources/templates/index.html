@@ -1,70 +1,398 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Employee Management</title>
+<title>Employee Management Dashboard</title>
+<style>
+/* General Styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(45deg, #ff7eb3,#2575fc,#f5f7fa);
+    background-size: 400% 400%;
+    animation: gradientBG 6s ease infinite;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    25% {
+        background-position: 50% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    75% {
+        background-position: 50% 100%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: linear-gradient(45deg, #ff7eb3, #ff758c,#f5f7fa);
+    background-size: 400% 400%;
+    animation: gradientBG 8s ease infinite;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+
+.sidebar a {
+    text-decoration: none;
+    font-size: 1.1rem;
+    color: #fff;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.sidebar a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(5px);
+}
+
+.sidebar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.sidebar h2 {
+	font-size: 24px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.sidebar a.active, .sidebar a:hover {
+	background: #007acc;
+}
+
+.sidebar .logout-btn {
+	margin-top: auto;
+	text-align: center;
+	padding: 10px;
+	background: #ff4d4d;
+	border-radius: 5px;
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.sidebar .logout-btn:hover {
+	background: #ff1a1a;
+}
+
+/* Main Content Area */
+.main-content {
+	flex: 1;
+	padding: 20px;
+}
+
+.main-header {
+	font-size: 32px;
+	font-weight: bold;
+	color: #005f99;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+/* Card Grid */
+.card-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 20px;
+}
+
+/* Card Styling */
+.card {
+	background: white;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.card h3 {
+	font-size: 20px;
+	color: #005f99;
+	margin-bottom: 10px;
+}
+
+.card ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.card ul li {
+	margin-bottom: 5px;
+	font-size: 16px;
+}
+
+.card a {
+	color: #007acc;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.card a:hover {
+	text-decoration: underline;
+}
+
+/* Table Styling */
+.table-container {
+	margin-top: 20px;
+	background: white;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+table th, table td {
+	padding: 10px;
+	text-align: center;
+	border: 1px solid #ddd;
+}
+
+table th {
+	background: #005f99;
+	color: white;
+}
+
+table tbody tr:nth-child(odd) {
+	background: #f5f7fa;
+}
+
+table tbody tr:nth-child(even) {
+	background: #e6f7ff;
+}
+
+table a {
+	color: #007acc;
+	text-decoration: none;
+}
+
+table a:hover {
+	text-decoration: underline;
+}
+
+/* Pagination Styling */
+.pagination {
+	margin: 20px 0;
+	text-align: center;
+}
+
+.pagination a {
+	text-decoration: none;
+	color: #007acc;
+	padding: 10px 15px;
+	margin: 0 5px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+}
+
+.pagination a:hover {
+	background: #e6f7ff;
+}
+
+.pagination .active-page {
+	background: #007acc;
+	color: white;
+	font-weight: bold;
+}
+/* Sidebar logout button */
+.sidebar form {
+	margin-top: 20px; /* Adds spacing between the links and button */
+	text-align: center; /* Centers the button */
+}
+
+.sidebar form button {
+	background: #ff4d4d; /* Red background for emphasis */
+	color: white; /* White text for contrast */
+	border: none; /* Removes default button borders */
+	padding: 10px 20px; /* Adds padding for a button-like appearance */
+	border-radius: 5px; /* Rounds the corners */
+	cursor: pointer; /* Indicates clickable behavior */
+	font-size: 16px; /* Makes the text larger */
+	font-weight: bold; /* Makes the text bold */
+	width: 100%; /* Ensures the button is the full width of the sidebar */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds subtle shadow */
+	transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.sidebar form button:hover {
+	background: #e63939; /* Darker red on hover */
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+	/* Enhances shadow on hover */
+}
+</style>
 </head>
 <body>
-	<h1>Employee Management</h1>
-	<a href="/employees/export/excel">Export to Excel</a> |
-	<a href="/departments">Manage Departments</a> |
-	<a href="/showNewEmployeeForm">Add New Employee</a> |
-	<form th:action="@{/logout}" method="post" style="display: inline;">
-		<button type="submit">Logout</button>
-	</form>
+	<!-- Sidebar -->
+	<div class="sidebar">
+		<h2>Dashboard</h2>
+		<a href="/projects" class="active">Home</a> <a href="/attendance">Attendance</a>
+		<a href="/performance-reviews">Performance Reviews</a> <a
+			href="/departments">Departments</a> <a href="/showNewEmployeeForm">Add
+			Employee</a> <a href="/employees/export/excel">Export Data</a>
+		<form th:action="@{/logout}" method="post" style="display: inline;">
+			<button type="submit">Logout</button>
+		</form>
+	</div>
 
-	<hr>
-	<form action="/employees/search" method="get">
-		<input type="text" name="keyword" placeholder="Search by name">
-		<select name="department">
-			<option value="">All Departments</option>
-			<option th:each="department : ${departments}"
-				th:value="${department.name}" th:text="${department.name}"></option>
-		</select>
-		<button type="submit">Search</button>
-	</form>
+	<!-- Main Content -->
+	<div class="main-content">
+		<div class="main-header">Employee Management Dashboard</div>
 
-	<!-- Back to Home Button -->
-	<p>
-		<a href="/index">Back to Home</a>
-	</p>
+		<!-- Cards Section -->
+		<div class="card-grid">
+			<!-- Projects Overview -->
+			<div class="card">
+				<h3>Projects Overview</h3>
+				<ul>
+					<li>Total Projects: <span th:text="${projectsCount}"></span></li>
+					<li>Ongoing: <span th:text="${ongoingProjectsCount}"></span></li>
+					<li>Completed: <span th:text="${completedProjectsCount}"></span></li>
+				</ul>
+				<a href="/projects">View All Projects</a>
+			</div>
+
+			<!-- Attendance Overview -->
+			<div class="card">
+				<h3>Attendance Overview</h3>
+				<ul>
+					<li>Total Attendance Records: <span
+						th:text="${attendanceCount}"></span></li>
+					<li>Present Today: <span th:text="${presentTodayCount}"></span></li>
+					<li>Absent Today: <span th:text="${absentTodayCount}"></span></li>
+				</ul>
+				<a href="/attendance">View All Attendance</a>
+			</div>
+
+			<!-- Performance Reviews -->
+			<div class="card">
+				<h3>Performance Reviews</h3>
+				<ul>
+					<li>Total Reviews: <span th:text="${reviewsCount}"></span></li>
+					<li>Average Rating: <span th:text="${averageRating}"></span></li>
+				</ul>
+				<a href="/performance-reviews">View Reviews</a>
+			</div>
+		</div>
 
 
-	<hr>
-	<table border="1">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>First Name</th>
-				<th>Last Name</th>
-				<th>Email</th>
-				<th>Department</th>
-				<th>Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="employee : ${listEmployees}">
-				<td th:text="${employee.id}"></td>
-				<td><a th:href="@{/employee/{id}(id=${employee.id})}" th:text="${employee.firstName}"></a></td>
-				<td th:text="${employee.lastName}"></td>
-				<td th:text="${employee.email}"></td>
-				<td th:text="${employee.department?.name ?: 'N/A'}"></td>
-				<td><a th:href="@{/showFormForUpdate/{id}(id=${employee.id})}">Edit</a>
-					|
-					<form th:action="@{/deleteEmployee/{id}(id=${employee.id})}"
-						method="post" style="display: inline;">
-						<button type="submit"
-							onclick="return confirm('Are you sure you want to delete this employee?')">Delete</button>
-					</form>
-			</tr>
-		</tbody>
-	</table>
-	<div>
-		<a th:if="${currentPage > 1}"
-			th:href="@{/page/{pageNo}(pageNo=${currentPage - 1})}">Previous</a>
-		Page <span th:text="${currentPage}"></span> of <span
-			th:text="${totalPages}"></span> <a
-			th:if="${currentPage < totalPages}"
-			th:href="@{/page/{pageNo}(pageNo=${currentPage + 1})}">Next</a>
+
+		<!-- Employee Table -->
+		<div class="table-container">
+
+			<!-- Search Form -->
+			<form action="/employees/search" method="get" class="search-form">
+				<div class="form-group">
+					<input type="text" name="keyword" placeholder="Search by name"
+						class="search-input"> <select name="department"
+						class="search-select">
+						<option value="">All Departments</option>
+						<option th:each="department : ${departments}"
+							th:value="${department.name}" th:text="${department.name}"></option>
+					</select>
+					<button type="submit" class="search-button">Search</button>
+					<a href="/index">Back to Home</a>
+				</div>
+			</form>
+
+			<h3>Employee List</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Email</th>
+						<th>Department</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody
+					th:if="${listEmployees != null && !#lists.isEmpty(listEmployees)}">
+					<tr th:each="employee : ${listEmployees}">
+						<td th:text="${employee.id}"></td>
+						<td><a th:href="@{/employee/{id}(id=${employee.id})}"
+							th:text="${employee.firstName}"></a></td>
+						<td th:text="${employee.lastName}"></td>
+						<td th:text="${employee.email}"></td>
+						<td th:text="${employee.department?.name ?: 'N/A'}"></td>
+						<td><a
+							th:href="@{/showFormForUpdate/{id}(id=${employee.id})}">Edit</a>
+							|
+							<form th:action="@{/deleteEmployee/{id}(id=${employee.id})}"
+								method="post" style="display: inline;">
+								<button type="submit"
+									onclick="return confirm('Are you sure you want to delete this employee?')">Delete</button>
+							</form> | <a
+							th:href="@{/performance-reviews/new/{id}(id=${employee.id})}"
+							class="add-review-link">Add Review</a> | <a
+							th:href="@{/performance-reviews/employee/{id}/reviews(id=${employee.id})}">View
+								Reviews</a></td>
+								
+					</tr>
+				</tbody>
+				<tbody
+					th:if="${listEmployees == null || #lists.isEmpty(listEmployees)}">
+					<tr>
+						<td colspan="6">No employees found.</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<!-- Pagination -->
+		<div class="pagination"
+			th:if="${currentPage != null && totalPages != null}">
+			<a th:if="${currentPage > 1}"
+				th:href="@{/page/{pageNo}(pageNo=${currentPage - 1})}">Previous</a>
+			<span th:each="pageNum : ${#numbers.sequence(1, totalPages)}">
+				<a th:if="${pageNum != currentPage}"
+				th:href="@{/page/{pageNo}(pageNo=${pageNum})}" th:text="${pageNum}"></a>
+				<span th:if="${pageNum == currentPage}" th:text="${pageNum}"
+				class="active-page"></span>
+			</span> <a th:if="${currentPage < totalPages}"
+				th:href="@{/page/{pageNo}(pageNo=${currentPage + 1})}">Next</a>
+		</div>
 	</div>
 </body>
 </html>

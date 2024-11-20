@@ -1,75 +1,175 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Add/Edit Employee</title>
+    <title>Add/Edit Employee</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #43cea2, #185a9d, #f27121);
+            background-size: 400% 400%;
+            animation: gradientBG 8s ease infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        form {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #185a9d;
+            box-shadow: 0 0 8px rgba(24, 90, 157, 0.5);
+        }
+
+        button {
+            padding: 12px;
+            background: linear-gradient(45deg, #ff512f, #dd2476);
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0px 8px 20px rgba(255, 81, 47, 0.5);
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1rem;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #43cea2, #185a9d);
+            border-radius: 5px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0px 8px 20px rgba(67, 206, 162, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            form {
+                padding: 15px;
+                width: 90%;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
 </head>
 <body>
-	<h1>Add/Edit Employee</h1>
-	<form th:action="@{/saveEmployee}" th:object="${employee}"
-		method="post">
-		<!-- Hidden Field for ID -->
-		<input type="hidden" name="id" th:value="${employee.id}">
+    <h1>Add/Edit Employee</h1>
+    <form th:action="@{/saveEmployee}" th:object="${employee}" method="post">
+        <!-- Hidden Field for ID -->
+        <input type="hidden" name="id" th:value="${employee.id}">
 
-		<!-- First Name -->
-		<label for="firstName">First Name:</label> <input type="text"
-			id="firstName" name="firstName" th:value="${employee.firstName}"
-			required> <br>
+        <!-- First Name -->
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" th:value="${employee.firstName}" required>
 
-		<!-- Last Name -->
-		<label for="lastName">Last Name:</label> <input type="text"
-			id="lastName" name="lastName" th:value="${employee.lastName}"
-			required> <br>
+        <!-- Last Name -->
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" th:value="${employee.lastName}" required>
 
-		<!-- Email -->
-		<label for="email">Email:</label> <input type="email" id="email"
-			name="email" th:value="${employee.email}" required> <br>
+        <!-- Email -->
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" th:value="${employee.email}" required>
 
-		<!-- Phone Number -->
-		<label for="phoneNumber">Phone Number:</label> <input type="text"
-			id="phoneNumber" name="phoneNumber"
-			th:value="${employee.phoneNumber}" required> <br>
+        <!-- Phone Number -->
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" th:value="${employee.phoneNumber}" required>
 
-		<!-- Address -->
-		<label for="address">Address:</label> <input type="text" id="address"
-			name="address" th:value="${employee.address}"> <br>
+        <!-- Address -->
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" th:value="${employee.address}">
 
-		<!-- Age -->
-		<label for="age">Age:</label> <input type="number" id="age" name="age"
-			th:value="${employee.age}"> <br>
+        <!-- Age -->
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" th:value="${employee.age}">
 
-		<!-- Date of Joining -->
-		<label for="dateOfJoining">Date of Joining:</label> <input type="date"
-			id="dateOfJoining" name="dateOfJoining"
-			th:value="${employee.dateOfJoining}"> <br>
+        <!-- Date of Joining -->
+        <label for="dateOfJoining">Date of Joining:</label>
+        <input type="date" id="dateOfJoining" name="dateOfJoining" th:value="${employee.dateOfJoining}">
 
-		<!-- Position -->
-		<label for="position">Position:</label> <input type="text"
-			id="position" name="position" th:value="${employee.position}">
-		<br>
+        <!-- Position -->
+        <label for="position">Position:</label>
+        <input type="text" id="position" name="position" th:value="${employee.position}">
 
-		<!-- Salary -->
-		<label for="salary">Salary:</label> <input type="number" id="salary"
-			name="salary" th:value="${employee.salary}"> <br>
+        <!-- Salary -->
+        <label for="salary">Salary:</label>
+        <input type="number" id="salary" name="salary" th:value="${employee.salary}">
 
-		<!-- Status -->
-		<label for="status">Status:</label> <select id="status" name="status">
-			<option value="Active" th:selected="${employee.status == 'Active'}">Active</option>
-			<option value="Inactive"
-				th:selected="${employee.status == 'Inactive'}">Inactive</option>
-		</select> <br>
+        <!-- Status -->
+        <label for="status">Status:</label>
+        <select id="status" name="status">
+            <option value="Active" th:selected="${employee.status == 'Active'}">Active</option>
+            <option value="Inactive" th:selected="${employee.status == 'Inactive'}">Inactive</option>
+        </select>
 
-		<!-- Department -->
-		<label for="department">Department:</label> <select id="department"
-			name="department.id">
-			<option th:each="dept : ${departments}" th:value="${dept.id}"
-				th:text="${dept.name}"></option>
-		</select> <br>
+        <!-- Department -->
+        <label for="department">Department:</label>
+        <select id="department" name="department.id">
+            <option th:each="dept : ${departments}" th:value="${dept.id}" th:text="${dept.name}"></option>
+        </select>
 
-		<!-- Submit Button -->
-		<button type="submit">Save Employee</button>
-	</form>
+        <!-- Submit Button -->
+        <button type="submit">Save Employee</button>
+    </form>
 
-	<!-- Back Button -->
-	<a href="/index">Back to Employee List</a>
+    <!-- Back Button -->
+    <a href="/index">Back to Employee List</a>
 </body>
 </html>

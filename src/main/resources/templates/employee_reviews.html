@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Employee Reviews</title>
+</head>
+<body>
+	<h1>
+		Performance Reviews for <span
+			th:text="${employee.firstName} + ' ' + ${employee.lastName}"></span>
+	</h1>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>Review Date</th>
+				<th>Reviewer</th>
+				<th>Rating</th>
+				<th>Comments</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="review : ${reviews}">
+				<td th:text="${review.reviewDate}"></td>
+				<td th:text="${review.reviewer}"></td>
+				<td th:text="${review.rating}"></td>
+				<td th:text="${review.comments}"></td>
+			</tr>
+		</tbody>
+	</table>
+	<a th:href="@{/employee/{id}(id=${employee.id})}">Back to Employee
+		Dashboard</a>
+</body>
+</html>

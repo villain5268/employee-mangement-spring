@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.boldnest.em.entity.Department;
 import com.boldnest.em.entity.Employee;
+import com.boldnest.em.service.AttendanceService;
 import com.boldnest.em.service.DepartmentService;
 import com.boldnest.em.service.EmployeeService;
+import com.boldnest.em.service.PerformanceReviewService;
+import com.boldnest.em.service.ProjectService;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -30,6 +33,15 @@ public class EmployeeController {
 
 	@Autowired
 	private DepartmentService departmentService;
+
+	@Autowired
+	private ProjectService projectService;
+
+	@Autowired
+	private AttendanceService attendanceService;
+
+	@Autowired
+	private PerformanceReviewService performanceReviewService;
 
 	@PostMapping("/deleteEmployee/{id}")
 	public String deleteEmployee(@PathVariable Long id) {
@@ -47,6 +59,9 @@ public class EmployeeController {
 	@GetMapping("/index")
 	public String viewHomePage(Model model) {
 		model.addAttribute("departments", departmentService.getAllDepartments());
+		model.addAttribute("listEmployees", employeeService.getAllEmployees());
+		model.addAttribute("projectsCount", projectService.getAllProjects().size());
+		model.addAttribute("reviewsCount", performanceReviewService.getAllReviews().size());
 		return findPaginated(1, "firstName", "asc", model);
 	}
 
@@ -116,9 +131,7 @@ public class EmployeeController {
 		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 		model.addAttribute("listEmployees", listEmployees);
 
-		// Add departments to the model for dropdown
-		model.addAttribute("departments", departmentService.getAllDepartments());
-
+		// Avoid overwriting attributes passed from `viewHomePage`
 		return "index";
 	}
 }

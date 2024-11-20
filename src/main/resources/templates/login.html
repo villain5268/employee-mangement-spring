@@ -4,59 +4,80 @@
 <title>Login</title>
 <style>
 body {
-	margin: 0;
-	padding: 0;
-	font-family: Arial, sans-serif;
-	background: linear-gradient(135deg, #ffecd2, #fcb69f, #fee2f8);
-	/* Three-color gradient */
-	color: #333333; /* Default text color */
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(45deg, #ff7eb3, #ff758c, #2575fc,#f5f7fa);
+    background-size: 400% 400%;
+    animation: gradientBG 6s ease infinite;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    25% {
+        background-position: 50% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    75% {
+        background-position: 50% 100%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .login-container {
-	background: #ffffff; /* Light container background */
-	padding: 30px;
-	border-radius: 10px;
-	box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+	background: #ffffff;
+	padding: 40px;
+	border-radius: 12px;
+	box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
 	text-align: center;
 	width: 100%;
 	max-width: 400px;
 }
 
 h1 {
-	margin-bottom: 10px;
-	font-size: 2rem;
-	color: #333333;
+	margin-bottom: 15px;
+	font-size: 2.5rem;
+	color: #4a4a4a;
 }
 
 p {
 	margin: 10px 0;
-	color: #666666;
+	color: #6a6a6a;
 }
 
 form {
-	margin-top: 20px;
+	margin-top: 25px;
 }
 
 label {
 	display: block;
-	margin-bottom: 5px;
+	margin-bottom: 8px;
 	text-align: left;
 	color: #555555;
+	font-weight: bold;
 }
 
 input[type="text"], input[type="password"] {
 	width: 100%;
-	padding: 10px;
-	margin-bottom: 15px;
-	border: 1px solid #cccccc;
-	border-radius: 5px;
+	padding: 12px;
+	margin-bottom: 20px;
+	border: 1px solid #dcdcdc;
+	border-radius: 8px;
 	background: #f9f9f9;
 	color: #333333;
 	font-size: 1rem;
+	box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 input::placeholder {
@@ -65,41 +86,70 @@ input::placeholder {
 
 button {
 	width: 100%;
-	padding: 10px;
+	padding: 12px;
 	border: none;
-	border-radius: 5px;
-	background: linear-gradient(135deg, #a1c4fd, #c2e9fb, #b2ff59);
+	border-radius: 8px;
+	background: linear-gradient(135deg, #89f7fe, #66a6ff);
 	color: #ffffff;
 	font-size: 1rem;
 	font-weight: bold;
 	cursor: pointer;
-	transition: background 0.3s ease;
+	transition: all 0.3s ease;
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
-	background: linear-gradient(135deg, #b2ff59, #c2e9fb, #a1c4fd);
+	background: linear-gradient(135deg, #66a6ff, #89f7fe);
+	transform: translateY(-2px);
+	box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 .error-message {
-	color: #e57373;
+	color: #ff6b6b;
 	margin-top: 10px;
 	font-size: 0.9rem;
 }
 
 .success-message {
-	color: #81c784;
+	color: #4caf50;
 	margin-top: 10px;
 	font-size: 0.9rem;
 }
 
 a {
-	color: #ff8a65;
+	color: #57c7ff;
 	text-decoration: none;
+	font-weight: bold;
 }
 
 a:hover {
 	text-decoration: underline;
+	color: #339af0;
 }
+/* Floating Particles Animation */
+
+/* Floating Particles Animation */
+.particle {
+	position: absolute;
+	background: rgba(255, 255, 255, 0.7);
+	border-radius: 50%;
+	pointer-events: none;
+	animation: float 6s ease-in-out infinite, move 12s linear infinite;
+}
+
+.particle:nth-child(odd) {
+	background: rgba(255, 255, 255, 0.5);
+}
+
+@keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        @keyframes move {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100vw); }
+        }
 </style>
 </head>
 <body>
@@ -123,5 +173,16 @@ a:hover {
 				here</a>
 		</p>
 	</div>
+	<!-- Floating Particles -->
+	<!-- Floating Particles -->
+<div class="particle" style="width: 10px; height: 10px; top: 20%; left: 70%;"></div>
+<div class="particle" style="width: 15px; height: 15px; top: 40%; left: 20%;"></div>
+<div class="particle" style="width: 8px; height: 8px; top: 60%; left: 80%;"></div>
+<div class="particle" style="width: 12px; height: 12px; top: 75%; left: 50%;"></div>
+<div class="particle" style="width: 18px; height: 18px; top: 10%; left: 30%;"></div>
+<div class="particle" style="width: 20px; height: 20px; top: 50%; left: 90%;"></div>
+<div class="particle" style="width: 14px; height: 14px; top: 65%; left: 15%;"></div>
+<div class="particle" style="width: 9px; height: 9px; top: 85%; left: 75%;"></div>
+
 </body>
 </html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Performance Reviews</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff7eb3, #ff758c, #6a11cb);
+            background-size: 400% 400%;
+            animation: gradientBG 8s ease infinite;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        th, td {
+            text-align: left;
+            padding: 15px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        th {
+            background: #6a11cb;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        tbody tr:nth-child(even) {
+            background: rgba(240, 240, 240, 0.8);
+        }
+
+        tbody tr:nth-child(odd) {
+            background: rgba(200, 200, 200, 0.4);
+        }
+
+        tbody tr:hover {
+            background: rgba(98, 182, 239, 0.2);
+            cursor: pointer;
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1rem;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #43cea2, #185a9d);
+            border-radius: 5px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0px 8px 20px rgba(67, 206, 162, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            table {
+                width: 95%;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            a {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Performance Reviews</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Employee</th>
+                <th>Date</th>
+                <th>Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="review : ${reviews}">
+                <td th:text="${review.id}"></td>
+                <td th:text="${review.employee.firstName} + ' ' + ${review.employee.lastName}"></td>
+                <td th:text="${review.reviewDate}"></td>
+                <td th:text="${review.rating}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/index">Back to Employee List</a>
+</body>
+</html>

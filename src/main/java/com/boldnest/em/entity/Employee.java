@@ -1,6 +1,8 @@
 package com.boldnest.em.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,6 +10,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -54,4 +58,8 @@ public class Employee {
 
 	@Column(name = "status", nullable = false)
 	private String status; // Active, Inactive, Terminated
+
+	@ManyToMany
+	@JoinTable(name = "employee_projects", joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))
+	private List<Project> projects = new ArrayList<>();
 }

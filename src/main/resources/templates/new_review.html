@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Department</title>
+    <title>Add Performance Review</title>
     <style>
         /* Global Styles */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 20px;
-            background: linear-gradient(135deg, #6a11cb, #2575fc, #43cea2);
+            background: linear-gradient(135deg, #ff7eb3, #ff758c, #6a11cb);
             background-size: 400% 400%;
             animation: gradientBG 8s ease infinite;
+            color: #fff;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            color: #fff;
         }
 
         @keyframes gradientBG {
@@ -36,10 +36,15 @@
             border-radius: 10px;
             box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
             width: 100%;
-            max-width: 500px;
+            max-width: 600px;
             display: flex;
             flex-direction: column;
             gap: 15px;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #333;
         }
 
         label {
@@ -63,13 +68,8 @@
 
         input:focus, textarea:focus {
             outline: none;
-            border-color: #2575fc;
-            box-shadow: 0 0 8px rgba(37, 117, 252, 0.5);
-        }
-
-        .error {
-            color: #d9534f;
-            font-size: 0.9rem;
+            border-color: #6a11cb;
+            box-shadow: 0 0 8px rgba(106, 17, 203, 0.5);
         }
 
         button {
@@ -115,27 +115,33 @@
             h1 {
                 font-size: 2em;
             }
+
+            a {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Add New Department</h1>
-    <form th:action="@{/departments}" th:object="${department}" method="post">
-        <!-- Department Name -->
-        <label for="name">Department Name:</label>
-        <input type="text" id="name" th:field="*{name}" required>
-        <div th:if="${#fields.hasErrors('name')}" class="error" th:errors="*{name}"></div>
+    <h1>Add Performance Review for Employee</h1>
+    <form th:action="@{/performance-reviews/new/{id}(id=${employee.id})}" th:object="${performanceReview}" method="post">
+        <p>
+            <strong>Employee:</strong> <span th:text="${employee.firstName} + ' ' + ${employee.lastName}"></span>
+        </p>
+        <label for="reviewer">Reviewer:</label>
+        <input type="text" id="reviewer" th:field="*{reviewer}" placeholder="Reviewer name" required>
 
-        <!-- Description -->
-        <label for="description">Description:</label>
-        <textarea id="description" th:field="*{description}"></textarea>
-        <div th:if="${#fields.hasErrors('description')}" class="error" th:errors="*{description}"></div>
+        <label for="reviewDate">Review Date:</label>
+        <input type="date" id="reviewDate" th:field="*{reviewDate}" required>
 
-        <!-- Submit Button -->
-        <button type="submit">Save</button>
+        <label for="rating">Rating:</label>
+        <input type="number" id="rating" th:field="*{rating}" min="1" max="5" required>
+
+        <label for="comments">Comments:</label>
+        <textarea id="comments" th:field="*{comments}" placeholder="Enter comments"></textarea>
+
+        <button type="submit">Submit Review</button>
     </form>
-
-    <!-- Back Button -->
-    <a href="/departments">Back to Departments</a>
+    <a th:href="@{/employee/{id}(id=${employee.id})}">Back to Employee Dashboard</a>
 </body>
 </html>

@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import com.boldnest.em.entity.Employee;
 import com.boldnest.em.repository.EmployeeRepository;
+import com.boldnest.em.repository.PerformanceReviewRepository;
 import com.boldnest.em.service.EmployeeService;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,6 +30,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
 	private EmployeeRepository employeeRepository;
+
+	@Autowired
+	private PerformanceReviewRepository reviewRepository;
 
 	@Override
 	public List<Employee> getAllEmployees() {
@@ -64,6 +68,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public void deleteEmployeeById(long id) {
+		reviewRepository.deleteByEmployeeId(id);
 		this.employeeRepository.deleteById(id);
 	}
 
