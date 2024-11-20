@@ -76,28 +76,10 @@ Running Tests
 Execute the following command to run the tests:
 mvn test
 
-Folder Structure
-
-src
-├── main
-│   ├── java/com/boldnest/em
-│   │   ├── controller     # Controllers for handling requests
-│   │   ├── entity         # Entity classes for JPA
-│   │   ├── repository     # JPA Repositories
-│   │   ├── service        # Service layer for business logic
-│   │   └── config         # Configuration classes (e.g., security)
-│   ├── resources
-│   │   ├── templates      # Thymeleaf HTML templates
-│   │   └── application.yml# Application properties
-└── test
-    ├── java/com/boldnest/em
-    │   └── tests          # Unit tests and integration tests
 Deployment
 You can deploy the application as a JAR or WAR file.
 
 Build JAR:
-
-
 mvn clean package
 java -jar target/employee-management-system-0.0.1-SNAPSHOT.jar
 Deploy WAR to Tomcat: Update pom.xml to package as a WAR, then deploy the WAR file to your Tomcat server.
@@ -112,7 +94,6 @@ Cache dependencies for faster builds.
 Example GitHub Actions workflow:
 
 name: Build and Test
-
 on:
   push:
     branches:
@@ -124,7 +105,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 17
@@ -141,6 +121,7 @@ jobs:
           ${{ runner.os }}-maven-
     - name: Build and Test
       run: mvn clean install
+
 Contributions
 Contributions are welcome! Follow these steps:
 
