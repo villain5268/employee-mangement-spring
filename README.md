@@ -2,7 +2,8 @@ Employee Management System
 An Employee Management System built using Spring Boot, Thymeleaf, and Hibernate/JPA, providing a platform to manage employees, departments, projects, attendance, and performance reviews.
 
 
-![image](https://github.com/user-attachments/assets/e97aedce-9833-41ed-beaa-b2d6c4d15cd6)
+![image](https://github.com/user-attachments/assets/05876996-1e24-4be7-8573-534ef113f174)
+
 ![image](https://github.com/user-attachments/assets/5fd9b885-bd2e-4e7c-a0e5-a54fa4ddf6e3)
 
 
