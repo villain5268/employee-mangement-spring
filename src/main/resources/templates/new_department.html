@@ -1,27 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
 <title>Add Department</title>
-<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
 </head>
 <body>
-	<div class="container">
-		<h2>Add New Department</h2>
-		<form th:action="@{/departments}" th:object="${department}"
-			method="post">
-			<div class="form-group">
-				<label>Department Name:</label> <input type="text"
-					class="form-control" th:field="*{name}"
-					placeholder="Enter department name" required />
-			</div>
-			<div class="form-group">
-				<label>Description:</label>
-				<textarea class="form-control" th:field="*{description}"
-					placeholder="Enter department description"></textarea>
-			</div>
-			<button type="submit" class="btn btn-primary">Save</button>
-		</form>
-	</div>
+	<h1>Add New Department</h1>
+	<form th:action="@{/departments}" th:object="${department}"
+		method="post">
+		<label for="name">Department Name:</label> <input type="text"
+			id="name" th:field="*{name}" required>
+		<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+		<br> <label for="description">Description:</label>
+		<textarea id="description" th:field="*{description}"></textarea>
+		<div th:if="${#fields.hasErrors('description')}"
+			th:errors="*{description}"></div>
+		<br>
+
+		<button type="submit">Save</button>
+	</form>
+	<a href="/departments">Back to Departments</a>
 </body>
 </html>

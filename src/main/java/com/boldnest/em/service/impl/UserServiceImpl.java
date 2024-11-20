@@ -39,9 +39,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User save(UserRegistrationDto registrationDto) {
 		User user = new User(registrationDto.getFirstName(), registrationDto.getLastName(), registrationDto.getEmail(),
-				passwordEncoder.encode(registrationDto.getPassword()), List.of(new Role("ROLE_USER")) // Assign default
-																										// role
-		);
+				passwordEncoder.encode(registrationDto.getPassword()), List.of(new Role("ROLE_USER")));
 
 		return userRepository.save(user);
 	}
@@ -60,8 +58,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findUserByEmail(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public User findUserByEmail(String email) {
+		return userRepository.findByEmail(email)
+				.orElseThrow(() -> new RuntimeException("User not found with email: " + email));
 	}
 }

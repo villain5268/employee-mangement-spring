@@ -29,4 +29,10 @@ public interface EmployeeService {
 	long getEmployeeCount();
 
 	void exportEmployeesToExcel(HttpServletResponse response) throws IOException; // New method
+
+	Employee findEmployeeByEmail(String name);
+
+	List<Employee> searchEmployees(String keyword, String departmentName, Integer minAge, Integer maxAge,
+			Double minSalary, Double maxSalary);
+
 }

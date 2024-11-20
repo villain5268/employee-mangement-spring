@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Employee Dashboard</title>
+</head>
+<body>
+	<h1>Employee Dashboard</h1>
+	<a href="/index">Back to Employee List</a>
+	<hr>
+
+	<h2 th:text="${employee.firstName} + ' ' + ${employee.lastName}"></h2>
+	<p>
+		<strong>Email:</strong> <span th:text="${employee.email}"></span>
+	</p>
+	<p>
+		<strong>Phone:</strong> <span th:text="${employee.phoneNumber}"></span>
+	</p>
+	<p>
+		<strong>Department:</strong> <span
+			th:text="${employee.department?.name ?: 'N/A'}"></span>
+	</p>
+	<p>
+		<strong>Position:</strong> <span th:text="${employee.position}"></span>
+	</p>
+	<p>
+		<strong>Age:</strong> <span th:text="${employee.age}"></span>
+	</p>
+	<p>
+		<strong>Address:</strong> <span th:text="${employee.address}"></span>
+	</p>
+	<p>
+		<strong>Date of Joining:</strong> <span
+			th:text="${#dates.format(employee.dateOfJoining, 'yyyy-MM-dd')}"></span>
+	</p>
+	<p>
+		<strong>Salary:</strong> <span th:text="${employee.salary}"></span>
+	</p>
+	<p>
+		<strong>Status:</strong> <span th:text="${employee.status}"></span>
+	</p>
+
+	<hr>
+	<a th:href="@{/showFormForUpdate/{id}(id=${employee.id})}">Edit
+		Employee</a>
+</body>
+</html>

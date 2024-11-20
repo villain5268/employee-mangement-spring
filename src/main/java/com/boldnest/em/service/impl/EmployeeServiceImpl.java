@@ -93,39 +93,39 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void exportEmployeesToExcel(HttpServletResponse response) throws IOException {
 		List<Employee> employees = employeeRepository.findAll();
 
-		Workbook workbook = new XSSFWorkbook();
-		Sheet sheet = workbook.createSheet("Employees");
+		try (Workbook workbook = new XSSFWorkbook()) {
+			Sheet sheet = workbook.createSheet("Employees");
 
-		// Create header row
-		Row headerRow = sheet.createRow(0);
-		String[] headers = { "ID", "First Name", "Last Name", "Email", "Department", "Age", "Position" };
-		for (int i = 0; i < headers.length; i++) {
-			Cell cell = headerRow.createCell(i);
-			cell.setCellValue(headers[i]);
-			cell.setCellStyle(createHeaderCellStyle(workbook));
+			// Create header row
+			Row headerRow = sheet.createRow(0);
+			String[] headers = { "ID", "First Name", "Last Name", "Email", "Department", "Age", "Position" };
+			for (int i = 0; i < headers.length; i++) {
+				Cell cell = headerRow.createCell(i);
+				cell.setCellValue(headers[i]);
+				cell.setCellStyle(createHeaderCellStyle(workbook));
+			}
+
+			// Write employee data
+			int rowNum = 1;
+			for (Employee employee : employees) {
+				Row row = sheet.createRow(rowNum++);
+				row.createCell(0).setCellValue(employee.getId());
+				row.createCell(1).setCellValue(employee.getFirstName() != null ? employee.getFirstName() : "N/A");
+				row.createCell(2).setCellValue(employee.getLastName() != null ? employee.getLastName() : "N/A");
+				row.createCell(3).setCellValue(employee.getEmail() != null ? employee.getEmail() : "N/A");
+				row.createCell(4)
+						.setCellValue(employee.getDepartment() != null ? employee.getDepartment().getName() : "N/A");
+				row.createCell(5).setCellValue(employee.getAge());
+				row.createCell(6).setCellValue(employee.getPosition() != null ? employee.getPosition() : "N/A");
+			}
+
+			// Set response headers
+			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+			response.setHeader("Content-Disposition", "attachment; filename=employees.xlsx");
+
+			// Write workbook to output stream
+			workbook.write(response.getOutputStream());
 		}
-
-		// Write employee data
-		int rowNum = 1;
-		for (Employee employee : employees) {
-			Row row = sheet.createRow(rowNum++);
-			row.createCell(0).setCellValue(employee.getId());
-			row.createCell(1).setCellValue(employee.getFirstName());
-			row.createCell(2).setCellValue(employee.getLastName());
-			row.createCell(3).setCellValue(employee.getEmail());
-			row.createCell(4)
-					.setCellValue(employee.getDepartment() != null ? employee.getDepartment().getName() : "N/A");
-			row.createCell(5).setCellValue(employee.getAge());
-			row.createCell(6).setCellValue(employee.getPosition());
-		}
-
-		// Set response headers
-		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-		response.setHeader("Content-Disposition", "attachment; filename=employees.xlsx");
-
-		// Write workbook to output stream
-		workbook.write(response.getOutputStream());
-		workbook.close();
 	}
 
 	private CellStyle createHeaderCellStyle(Workbook workbook) {
@@ -135,5 +135,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 		font.setFontHeightInPoints((short) 12);
 		style.setFont(font);
 		return style;
+	}
+
+	@Override
+	public Employee findEmployeeByEmail(String email) {
+		return employeeRepository.findByEmail(email)
+				.orElseThrow(() -> new RuntimeException("Employee not found with email: " + email));
+	}
+
+	@Override
+	public List<Employee> searchEmployees(String keyword, String departmentName, Integer minAge, Integer maxAge,
+			Double minSalary, Double maxSalary) {
+		return employeeRepository.searchEmployees(keyword, departmentName, minAge, maxAge, minSalary, maxSalary);
 	}
 }

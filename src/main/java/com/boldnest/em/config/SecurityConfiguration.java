@@ -26,8 +26,16 @@ public class SecurityConfiguration {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(
-				auth -> auth.requestMatchers("/", "/page/**").authenticated().anyRequest().permitAll())
-				.formLogin(form -> form.loginPage("/login").permitAll()).logout(logout -> logout.permitAll());
+				auth -> auth.requestMatchers("/login", "/registration/**", "/css/**", "/js/**", "/favicon.ico")
+						.permitAll().anyRequest().authenticated())
+				.formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/index", true).permitAll())
+				.logout(logout -> logout.logoutUrl("/logout") // Handles POST requests to /logout
+						.logoutSuccessUrl("/login?logout") // Redirects to login page with logout param
+						.invalidateHttpSession(true) // Invalidates session
+						.clearAuthentication(true) // Clears authentication context
+						.permitAll()) // Allows the logout endpoint without authentication
+				.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**")) // CSRF disabled for H2 console during dev
+				.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()));
 		return http.build();
 	}
 

@@ -1,5 +1,7 @@
 package com.boldnest.em.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,4 +41,17 @@ public class Employee {
 	// Additional fields for filtering
 	private int age;
 	private String position;
+
+	@Column(name = "phone_number")
+	private String phoneNumber;
+
+	private String address;
+
+	@Column(name = "date_of_joining")
+	private LocalDateTime dateOfJoining;
+
+	private double salary;
+
+	@Column(name = "status", nullable = false)
+	private String status; // Active, Inactive, Terminated
 }

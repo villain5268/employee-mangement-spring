@@ -1,38 +1,75 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>New Employee</title>
-<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+<title>Add/Edit Employee</title>
 </head>
 <body>
-	<div class="container">
-		<h2>Add/Edit Employee</h2>
-		<form th:action="@{/saveEmployee}" th:object="${employee}"
-			method="post">
-			<div class="form-group">
-				<label>First Name:</label> <input type="text" class="form-control"
-					th:field="*{firstName}" placeholder="Enter first name" required />
-			</div>
-			<div class="form-group">
-				<label>Last Name:</label> <input type="text" class="form-control"
-					th:field="*{lastName}" placeholder="Enter last name" required />
-			</div>
-			<div class="form-group">
-				<label>Email:</label> <input type="email" class="form-control"
-					th:field="*{email}" placeholder="Enter email" required />
-			</div>
-			<div class="form-group">
-				<label>Department:</label> <select class="form-control"
-					th:field="*{department.id}" required>
-					<option value="">Select Department</option>
-					<option th:each="department : ${departments}"
-						th:value="${department.id}" th:text="${department.name}"></option>
+	<h1>Add/Edit Employee</h1>
+	<form th:action="@{/saveEmployee}" th:object="${employee}"
+		method="post">
+		<!-- Hidden Field for ID -->
+		<input type="hidden" name="id" th:value="${employee.id}">
 
-				</select>
-			</div>
-			<button type="submit" class="btn btn-primary">Save</button>
-		</form>
-	</div>
+		<!-- First Name -->
+		<label for="firstName">First Name:</label> <input type="text"
+			id="firstName" name="firstName" th:value="${employee.firstName}"
+			required> <br>
+
+		<!-- Last Name -->
+		<label for="lastName">Last Name:</label> <input type="text"
+			id="lastName" name="lastName" th:value="${employee.lastName}"
+			required> <br>
+
+		<!-- Email -->
+		<label for="email">Email:</label> <input type="email" id="email"
+			name="email" th:value="${employee.email}" required> <br>
+
+		<!-- Phone Number -->
+		<label for="phoneNumber">Phone Number:</label> <input type="text"
+			id="phoneNumber" name="phoneNumber"
+			th:value="${employee.phoneNumber}" required> <br>
+
+		<!-- Address -->
+		<label for="address">Address:</label> <input type="text" id="address"
+			name="address" th:value="${employee.address}"> <br>
+
+		<!-- Age -->
+		<label for="age">Age:</label> <input type="number" id="age" name="age"
+			th:value="${employee.age}"> <br>
+
+		<!-- Date of Joining -->
+		<label for="dateOfJoining">Date of Joining:</label> <input type="date"
+			id="dateOfJoining" name="dateOfJoining"
+			th:value="${employee.dateOfJoining}"> <br>
+
+		<!-- Position -->
+		<label for="position">Position:</label> <input type="text"
+			id="position" name="position" th:value="${employee.position}">
+		<br>
+
+		<!-- Salary -->
+		<label for="salary">Salary:</label> <input type="number" id="salary"
+			name="salary" th:value="${employee.salary}"> <br>
+
+		<!-- Status -->
+		<label for="status">Status:</label> <select id="status" name="status">
+			<option value="Active" th:selected="${employee.status == 'Active'}">Active</option>
+			<option value="Inactive"
+				th:selected="${employee.status == 'Inactive'}">Inactive</option>
+		</select> <br>
+
+		<!-- Department -->
+		<label for="department">Department:</label> <select id="department"
+			name="department.id">
+			<option th:each="dept : ${departments}" th:value="${dept.id}"
+				th:text="${dept.name}"></option>
+		</select> <br>
+
+		<!-- Submit Button -->
+		<button type="submit">Save Employee</button>
+	</form>
+
+	<!-- Back Button -->
+	<a href="/index">Back to Employee List</a>
 </body>
 </html>
